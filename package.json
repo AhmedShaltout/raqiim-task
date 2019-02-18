@@ -1,0 +1,28 @@
+{
+  "name": "backend-task",
+  "version": "1.0.0",
+  "description": "raqiim task",
+  "main": "main.js",
+  "dependencies": {
+    "bcrypt": "^3.0.3",
+    "compression": "^1.7.3",
+    "connect-mongo": "^2.0.3",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "express-session": "^1.15.6",
+    "graphql": "^14.1.1",
+    "helmet": "^3.15.0",
+    "mongoose": "^5.4.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app/main",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AhmedShaltout/raqiim-task.git"
+  }
+}

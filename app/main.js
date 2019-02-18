@@ -1,0 +1,28 @@
+const express = require('express')
+const mongoose = require('mongoose')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const passport = require('passport')
+const compression = require('compression')
+const helmet = require('helmet')
+const graphqlHTTP = require('express-graphql')
+require('./config/passport-setup')
+const schema = require('./handellers/graphql-handeller')
+const { checkAuthentication } = require('./handellers/authentication-handeller')
+const { MONGOOSE_CONFIG, PORT, SESSION_CONGIG, SESSION_STORE } = require('./config/settings')
+const { GRAPHQL } = require('./utils/constants')
+
+mongoose.connect(MONGOOSE_CONFIG.MONGO_URI, MONGOOSE_CONFIG.MONGODB_CONFIG).catch(error => console.error(error.message))
+
+app = express()
+app.use(compression())
+app.use(helmet())
+app.use(session({ ...SESSION_CONGIG, store: new MongoStore(SESSION_STORE) }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use(GRAPHQL, checkAuthentication, graphqlHTTP((req, res) => ({ schema, context: { req, res }, graphiql: true })))
+
+app.listen(PORT)
